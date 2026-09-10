@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CSC402_Lab2Theme {
-               GreetingCard()
+              CourseListScreen()
             }
         }
     }
