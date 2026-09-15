@@ -15,13 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import edu.iau.cshj.csc402.lab3.ui.theme.CSC402_Lab3Theme
@@ -49,7 +48,6 @@ fun StudentCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Box(
                     modifier = Modifier.size(52.dp)
                 ) {
@@ -57,13 +55,13 @@ fun StudentCard(
                         modifier = Modifier
                             .size(52.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFF0B2D55)),
+                            .background(MaterialTheme.colorScheme.primary),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "JA",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
 
@@ -73,11 +71,11 @@ fun StudentCard(
                             .align(Alignment.BottomEnd)
                             .border(
                                 width = 2.dp,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.surface,
                                 shape = CircleShape
                             )
                             .clip(CircleShape)
-                            .background(Color.Green)
+                            .background(MaterialTheme.colorScheme.tertiary)
                     )
                 }
 
@@ -88,24 +86,32 @@ fun StudentCard(
                 ) {
                     Text(
                         text = student.name,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleLarge
                     )
 
                     Text(
-                        text = "${student.program} · Level 4"
+                        text = "${student.program} · Level 4",
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
 
                 Text(
                     text = student.gpa,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
 
             HorizontalDivider()
 
-            Text(text = student.email)
-            Text(text = student.city)
+            Text(
+                text = student.email,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Text(
+                text = student.city,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
