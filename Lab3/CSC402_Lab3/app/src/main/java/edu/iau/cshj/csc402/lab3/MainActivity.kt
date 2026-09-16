@@ -1,12 +1,9 @@
 package edu.iau.cshj.csc402.lab3
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import edu.iau.cshj.csc402.lab3.ui.theme.CSC402_Lab3Theme
 
@@ -16,14 +13,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CSC402_Lab3Theme {
-                Scaffold(
+                ProfileScreen(
                     modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-
-                    ClickablePaddingExample(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                )
             }
         }
     }
