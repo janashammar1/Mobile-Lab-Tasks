@@ -1,0 +1,50 @@
+package sa.edu.iau.cshj.studyplanner
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class TodayViewModel(application: Application) :
+    AndroidViewModel(application) {
+
+    private val repository = TaskRepository(
+        StudyDatabase.getDatabase(application).studyTaskDao()
+    )
+
+    private val _uiState = MutableStateFlow(TodayUiState())
+    val uiState: StateFlow<TodayUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            repository.allTasks.collect { tasks ->
+                _uiState.update {
+                    it.copy(isLoading = false, tasks = tasks)
+                }
+            }
+        }
+    }
+
+    fun onAddTask(title: String) {
+        if (title.isBlank()) return
+        viewModelScope.launch {
+            repository.add(title.trim(), "Mobile Apps")
+            _uiState.update { it.copy(message = "Task added") }
+        }
+    }
+
+    fun onTaskCheckedChange(task: StudyTask, done: Boolean) {
+        viewModelScope.launch {
+            repository.setDone(task, done)
+            if (done) _uiState.update { it.copy(message = "Marked as done") }
+        }
+    }
+
+    fun onMessageShown() {
+        _uiState.update { it.copy(message = null) }
+    }
+}
